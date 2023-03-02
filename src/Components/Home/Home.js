@@ -20,6 +20,7 @@ const Home = () => {
             setUserDetails([JSON.parse(localStorage.getItem('details'))])
         }
     },[])  
+
     const handleTrack = () => {
         const details=  userDetails.filter((element) => element.orderedId == captureInput)
     if(details.length>0){
@@ -52,15 +53,19 @@ const Home = () => {
         }
 
     }
+    const  redirectHome = () => {
+        setPageNo(0)
+        setOrderStatus('')
+    }
     const handlePreviousPage = () => {
         setPageNo(pageNo-1)
     }
     const handleSubmitButton = () => {
         if(pageNo==3 && delilvery===''){
-            alert('provide the delivery location')
+            setOrderStatus('provide the delivery location')
         }else{
-        alert(`Your Order with OrderId:${orderId} is successfull`)
-        setPageNo(0)
+            setOrderStatus(`Your Order with OrderId:${orderId} is successfull`)
+        const myTimeOut = setTimeout(redirectHome, 3000)
         const obj = {
             phoneNummber : phone,
             pickupLocation : pickup,
@@ -100,6 +105,7 @@ const Home = () => {
           <input onChange={(e) => setDelivery(e.target.value)} className={home.input_Field} type='text' placeholder='Delivery location' />
             <button onClick={handlePreviousPage} className={home.order_Button}>Back</button>
             <button onClick={handleSubmitButton} className={home.order_Button}>Submit</button>
+            <p className={home.paragraph}>{orderStatus}</p>
             </div>}
 
 
